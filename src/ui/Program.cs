@@ -42,7 +42,7 @@ internal class Program
     {
         return (
             arg > 0 && arg < 5,
-            "The choice must be between 0 and 4, 4 inclusive. Try again: "
+            "Choose a number between 1 and 4. Try again: "
         );
     }
 }
