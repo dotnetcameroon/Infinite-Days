@@ -1,6 +1,6 @@
 namespace models;
 
-public class Order
+public sealed class Order
 {
     private readonly List<Product> _products = [];
     public int Id { get; set; }

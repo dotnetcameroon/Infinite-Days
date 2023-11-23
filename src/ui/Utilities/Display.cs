@@ -1,6 +1,6 @@
 namespace ui.Utilities;
 
-public static class Display
+internal static class Display
 {
     public static void PrintMenu(IEnumerable<(int index, string name)> options)
     {

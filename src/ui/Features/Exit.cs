@@ -1,6 +1,6 @@
 namespace ui.Features;
 
-public partial class Feature
+internal partial class Feature
 {
     public static bool Exit()
     {

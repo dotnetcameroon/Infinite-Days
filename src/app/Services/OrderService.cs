@@ -3,9 +3,8 @@ using models;
 
 namespace app.Services;
 
-public class OrderService
+public sealed class OrderService
 {
-
     private readonly IOrderRepository _orderRepository;
 
     public OrderService(IOrderRepository orderRepository)
