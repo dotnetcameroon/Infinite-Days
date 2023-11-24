@@ -13,9 +13,9 @@ internal partial class Feature
         Console.WriteLine("Here is the list of all our products");
         foreach (var product in products)
         {
-            Console.WriteLine(product.Id);
-            Console.WriteLine(product.Name);
-            Console.WriteLine(product.Price);
+            Console.WriteLine($"Id:\t{product.Id}");
+            Console.WriteLine($"Name:\t{product.Name}");
+            Console.WriteLine($"Price:\t{product.Price}");
             Console.WriteLine("___________________________________________");
         }
 
