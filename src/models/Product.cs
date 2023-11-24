@@ -1,8 +1,11 @@
 namespace models;
 
-public sealed class Product
+public sealed class Product(
+    string name,
+    decimal price)
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public decimal Price { get; set; }
+    private static int _count;
+    public int Id { get; private init; } = ++_count;
+    public string Name { get; private set; } = name;
+    public decimal Price { get; private set; } = price;
 }

@@ -2,8 +2,9 @@ namespace models;
 
 public sealed class Order
 {
+    private static int _count = 0;
     private readonly List<Product> _products = [];
-    public int Id { get; set; }
+    public int Id { get; private init; } = ++_count;
     public bool Processed { get; private set; }
     public IReadOnlyList<Product> Products => _products.ToArray();
     public decimal TotalPrice => Products.Sum(p => p.Price);
