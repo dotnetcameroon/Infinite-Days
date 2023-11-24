@@ -10,6 +10,12 @@ internal class OrderRepository : IOrderRepository
     public event Action<Order> OrderProcessed;
     #pragma warning restore CS8618
 
+    public IReadOnlyCollection<Order> GetAllOrders()
+    {
+        // TODO: Implement the logic that returns all the registered orders
+        throw new NotImplementedException();
+    }
+
     public Order? GetSingleOrder(Func<Order, bool> predicate)
     {
         // TODO: Return the first or default order that matches the predicate
@@ -18,7 +24,7 @@ internal class OrderRepository : IOrderRepository
 
     public void RegisterOrder(Order order)
     {
-        // TODO: Add the processed order to the list of orders
+        // TODO: Add the logic to processed the order and save it into the list of orders
         OrderProcessed?.Invoke(order);
     }
 }
