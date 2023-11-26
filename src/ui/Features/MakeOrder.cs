@@ -11,7 +11,6 @@ internal partial class Feature
     public static async Task<bool> MakeOrder(IServiceProvider sp)
     {
         var orderService = sp.GetRequiredService<OrderService>();
-        var orderRepository = sp.GetRequiredService<IOrderRepository>();
         var productsRepository = sp.GetRequiredService<IProductsRepository>();
         var order = new Order();
 
@@ -41,8 +40,7 @@ internal partial class Feature
             order.AddProduct(product);
         }
 
-        // Process order
-        orderRepository.Add(order);
+        orderService.RegisterOrder(order);
         await orderService.ProcessOrderAsync(order.Id);
         return false;
     }

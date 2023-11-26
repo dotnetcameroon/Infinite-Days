@@ -1,4 +1,5 @@
 using app.Repositories;
+using app.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ui.Features;
@@ -7,8 +8,8 @@ internal partial class Feature
 {
     public static Task<bool> ViewOrders(IServiceProvider sp)
     {
-        var orderRepository = sp.GetRequiredService<IOrderRepository>();
-        var products = orderRepository.GetAll();
+        var orderService = sp.GetRequiredService<OrderService>();
+        var products = orderService.GetAll();
 
         Console.WriteLine("These are all the registered orders:");
         foreach (var product in products)

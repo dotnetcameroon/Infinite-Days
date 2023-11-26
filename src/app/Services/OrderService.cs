@@ -13,6 +13,19 @@ public sealed class OrderService
         _orderRepository.OrderProcessed += HandleOrderProcessed;
     }
 
+    public Order RegisterOrder(Order order)
+    {
+        if(_orderRepository.GetById(order.Id) is null)
+            _orderRepository.Add(order);
+
+        return order;
+    }
+
+    public IReadOnlyCollection<Order> GetAll()
+    {
+        return _orderRepository.GetAll();
+    }
+
     public Task ProcessOrderAsync(int orderId)
     {
         // Asynchronously process the order
