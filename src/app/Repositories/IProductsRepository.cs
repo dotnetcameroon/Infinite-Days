@@ -4,6 +4,6 @@ namespace app.Repositories;
 
 public interface IProductsRepository
 {
-    IEnumerable<Product> GetAll();
+    IReadOnlyCollection<Product> GetAll();
     Product? GetById(int Id);
 }

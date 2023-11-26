@@ -6,7 +6,7 @@ namespace lib.Repositories.Concrete;
 internal class ProductsRepository : IProductsRepository
 {
     private readonly List<Product> _products = [];
-    public IEnumerable<Product> GetAll()
+    public IReadOnlyCollection<Product> GetAll()
     {
         // TODO: Return all the products from the list
         throw new NotImplementedException();
