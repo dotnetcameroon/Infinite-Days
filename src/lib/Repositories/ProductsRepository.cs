@@ -12,9 +12,9 @@ internal class ProductsRepository : IProductsRepository
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Product> GetProducts(Predicate<Product> predicate)
+    public Product? GetProductById(int Id)
     {
-        // TODO: Use Linq to retrieve only the products that match the predicate criteria
+        // TODO: Retrieve a single order or default from the _products database by its Id
         throw new NotImplementedException();
     }
 }
