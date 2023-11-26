@@ -31,7 +31,7 @@ internal partial class Feature
                 continue;
             }
 
-            var product = productsRepository.GetProductById(productId);
+            var product = productsRepository.GetById(productId);
             if(product is null)
             {
                 Display.WriteError($"The product {productId} does not exist in the database");
@@ -42,7 +42,7 @@ internal partial class Feature
         }
 
         // Process order
-        orderRepository.RegisterOrder(order);
+        orderRepository.Add(order);
         await orderService.ProcessOrderAsync(order.Id);
         return false;
     }

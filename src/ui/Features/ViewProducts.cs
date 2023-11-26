@@ -8,7 +8,7 @@ internal partial class Feature
     public static Task<bool> ViewProducts(IServiceProvider sp)
     {
         var productsRepository = sp.GetRequiredService<IProductsRepository>();
-        var products = productsRepository.GetAllProducts();
+        var products = productsRepository.GetAll();
 
         Console.WriteLine("Here is the list of all our products");
         foreach (var product in products)

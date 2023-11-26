@@ -8,7 +8,7 @@ internal partial class Feature
     public static Task<bool> ViewOrders(IServiceProvider sp)
     {
         var orderRepository = sp.GetRequiredService<IOrderRepository>();
-        var products = orderRepository.GetAllOrders();
+        var products = orderRepository.GetAll();
 
         Console.WriteLine("These are all the registered orders:");
         foreach (var product in products)
