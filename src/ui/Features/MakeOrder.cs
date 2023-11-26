@@ -15,16 +15,45 @@ internal partial class Feature
         var productsRepository = sp.GetRequiredService<IProductsRepository>();
         var order = new Order();
 
-        bool exit = false;
         // Add products process
-        while(!exit)
+        while(true)
         {
-            // Add a new product
-            // Or quit the process
+            Console.Clear();
+            PrintProducts(order);
+            Console.Write("Enter the Id of the product you want to add, or 'ok' to process the order");
+            var input = Console.ReadLine() ?? string.Empty;
+            if(input.Equals("ok", StringComparison.OrdinalIgnoreCase))
+                break;
+
+            if(!int.TryParse(input, out int productId))
+            {
+                Display.WriteError("Enter a valid Id");
+                continue;
+            }
+
+            var product = productsRepository.GetProductById(productId);
+            if(product is null)
+            {
+                Display.WriteError($"The product {productId} does not exist in the database");
+                continue;
+            }
+
+            order.AddProduct(product);
         }
 
         // Process order
+        orderRepository.RegisterOrder(order);
         await orderService.ProcessOrderAsync(order.Id);
         return false;
+    }
+
+    private static void PrintProducts(Order order)
+    {
+        Console.WriteLine("Order Products: \n");
+        foreach (var product in order.Products)
+        {
+            Console.WriteLine(product.Id);
+        }
+        Console.WriteLine();
     }
 }
