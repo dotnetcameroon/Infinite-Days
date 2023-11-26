@@ -11,7 +11,7 @@ internal partial class Feature
     public static async Task<bool> MakeOrder(IServiceProvider sp)
     {
         var orderService = sp.GetRequiredService<OrderService>();
-        var productsRepository = sp.GetRequiredService<IProductsRepository>();
+        var productService = sp.GetRequiredService<ProductService>();
         var order = new Order();
 
         // Add products process
@@ -26,14 +26,16 @@ internal partial class Feature
 
             if(!int.TryParse(input, out int productId))
             {
-                Display.WriteError("Enter a valid Id");
+                Display.WriteError("Enter a valid Id. Retry after 1s ...");
+                Thread.Sleep(1000);
                 continue;
             }
 
-            var product = productsRepository.GetById(productId);
+            var product = productService.GetById(productId);
             if(product is null)
             {
-                Display.WriteError($"The product {productId} does not exist in the database");
+                Display.WriteError($"The product {productId} does not exist in the database. Retry after 1s ...");
+                Thread.Sleep(1000);
                 continue;
             }
 
