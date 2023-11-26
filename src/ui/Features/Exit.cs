@@ -2,8 +2,8 @@ namespace ui.Features;
 
 internal partial class Feature
 {
-    public static bool Exit(IServiceProvider sp)
+    public static Task<bool> Exit(IServiceProvider sp)
     {
-        return true;
+        return Task.FromResult(true);
     }
 }

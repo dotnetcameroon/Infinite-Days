@@ -5,7 +5,7 @@ namespace ui.Features;
 
 internal partial class Feature
 {
-    public static bool ViewOrders(IServiceProvider sp)
+    public static Task<bool> ViewOrders(IServiceProvider sp)
     {
         var orderRepository = sp.GetRequiredService<IOrderRepository>();
         var products = orderRepository.GetAllOrders();
@@ -18,6 +18,6 @@ internal partial class Feature
             Console.WriteLine("___________________________________________");
         }
 
-        return false;
+        return Task.FromResult(false);
     }
 }
