@@ -2,7 +2,7 @@ using models;
 using lib.Repositories.Concrete;
 using InfrastructureTests.Fakers;
 
-namespace InfrastructureTests;
+namespace InfrastructureTests.Tests;
 public class ProductsRepositoryTests
 {
     [Fact]
@@ -10,7 +10,7 @@ public class ProductsRepositoryTests
     {
         // Arrange
         IReadOnlyList<Product> expectedProducts = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new (expectedProducts);
+        ProductsRepository productsRepository = new(expectedProducts);
 
         // Act
         var actualProducts = productsRepository.GetAll();
@@ -25,7 +25,7 @@ public class ProductsRepositoryTests
     {
         // Arrange
         IReadOnlyList<Product> products = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new (products);
+        ProductsRepository productsRepository = new(products);
         var expectedProduct = products[Random.Shared.Next(products.Count)];
 
         // Act
@@ -40,7 +40,7 @@ public class ProductsRepositoryTests
     {
         // Arrange
         IReadOnlyList<Product> products = GenerateRandomProducts(20);
-        ProductsRepository productsRepository = new (products);
+        ProductsRepository productsRepository = new(products);
 
         // Act
         var actualProducts = productsRepository.GetAll();
@@ -50,6 +50,7 @@ public class ProductsRepositoryTests
             _ = actualProducts.Single(p => p.Id == product.Id);
         }
 
+        // Test
         Assert.True(true);
     }
 
