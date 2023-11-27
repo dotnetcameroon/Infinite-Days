@@ -3,9 +3,18 @@ using models;
 
 namespace lib.Repositories.Concrete;
 
-internal class ProductsRepository : IProductsRepository
+public class ProductsRepository : IProductsRepository
 {
     private readonly List<Product> _products = [];
+    public ProductsRepository()
+    {
+    }
+
+    public ProductsRepository(IEnumerable<Product> products)
+    {
+        _products = products.ToList();
+    }
+
     public IReadOnlyCollection<Product> GetAll()
     {
         // TODO: Return all the products from the list

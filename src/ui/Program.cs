@@ -9,7 +9,10 @@ namespace ui;
 
 internal class Program
 {
-    private static readonly Dictionary<int, (string featureName, Func<IServiceProvider, Task<bool>> feature)> _features = new()
+    private static readonly Dictionary<
+        int, // Key
+        (string featureName, Func<IServiceProvider, Task<bool>> featureAsync)> // Value
+        _features = new()
     {
         { 1, ("See all products", Feature.ViewProducts) },
         { 2, ("Make an order", Feature.MakeOrder) },
@@ -37,7 +40,7 @@ internal class Program
             int choice = Display.Read<int>(ValidateMenuInput, "\nEnter your choice: ");
 
             if (_features.TryGetValue(choice, out var option))
-                exit = await option.feature(sp);
+                exit = await option.featureAsync(sp);
             else
                 exit = true;
         }
