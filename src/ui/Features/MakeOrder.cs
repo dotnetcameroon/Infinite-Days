@@ -18,7 +18,7 @@ internal partial class Feature
         {
             Console.Clear();
             PrintProducts(order);
-            Console.Write("Enter the Id of the product you want to add, or 'ok' to process the order");
+            Console.Write("Enter the Id of the product you want to add, or 'ok' to process the order: ");
             var input = Console.ReadLine() ?? string.Empty;
             if(input.Equals("ok", StringComparison.OrdinalIgnoreCase))
                 break;
