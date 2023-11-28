@@ -1,0 +1,33 @@
+name: .NET Build and Test
+
+on:
+  push:
+    branches:
+      - "*-solution"
+      - main
+  pull_request:
+    branches:
+      - "*-solution"
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v8
+      with:
+        dotnet-version: 8.0.100
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Run Tests
+      run: dotnet test --configuration Release --no-build
