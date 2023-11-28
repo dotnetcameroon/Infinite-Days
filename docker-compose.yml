@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ui:
+    build: 
+      context: .
+      dockerfile: src/ui/Dockerfile
+    ports:
+      - "80:80"
+    command: ["dotnet", "run"]
+    working_dir: /app
