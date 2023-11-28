@@ -75,6 +75,39 @@ public class OrderRepositoryTests
         Assert.True(true);
     }
 
+    [Fact]
+    public async Task Add_ShouldRaiseTheOrderProcessedEvent()
+    {
+        // Arrange
+        bool isHandled = false;
+        OrderRepository orderRepository = new();
+        orderRepository.OrderProcessed += _ => isHandled = true;
+        var order = new Order();
+
+        // Act
+        orderRepository.Add(order);
+        await Task.Delay(100); // Wait for the event to be handled
+
+        // Assert
+        Assert.True(isHandled);
+    }
+
+    [Fact]
+    public void Add_ShouldAddOrderToTheDatabase()
+    {
+        // Arrange
+        OrderRepository orderRepository = new();
+        var order = new Order();
+
+        // Act
+        orderRepository.Add(order);
+
+        // Assert
+        var orders = orderRepository.GetAll();
+        Assert.Contains(order, orders);
+        Assert.Equal(1, orders.Count);
+    }
+
     static List<Order> GenerateRandomOrders(int number)
     {
         return new OrderFaker().Generate(number);
