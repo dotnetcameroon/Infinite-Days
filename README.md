@@ -6,6 +6,7 @@ Welcome to Infinite Days Challenge! This event is designed to test your skills i
 > Note: The full documentation is available in the `/docs` folder. Take a look at this for further explanations.
 >
 > Especially:
+> - [Challenge rules](./docs/rules.md)
 > - [Project structure](./docs/project-structure.md)
 
 ### Task
