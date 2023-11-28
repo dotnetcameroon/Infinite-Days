@@ -13,7 +13,7 @@ public class OrderServiceTests
     {
         // Arrange
         var orders = new OrderFaker().Generate(1);
-        var order = orders[Random.Shared.Next(orders.Count)];
+        var order = orders[Random.Shared.Next(orders.Count - 1)];
         var moqOrderRepository = new Mock<IOrderRepository>();
         moqOrderRepository.Setup(x => x.GetAll()).Returns(orders);
         moqOrderRepository.Setup(x => x.GetById(order.Id - 1)).Returns(orders[order.Id]);
@@ -32,11 +32,9 @@ public class OrderServiceTests
     public void ProcessOrderAsync_ShouldRaiseTheOrderProcessedEvent()
     {
         // Arrange
-        var orders = new OrderFaker().Generate(1);
-        var order = orders[Random.Shared.Next(orders.Count)];
+        var order = new OrderFaker().Generate(1)[0];
         var moqOrderRepository = new Mock<IOrderRepository>();
-        moqOrderRepository.Setup(x => x.GetAll()).Returns(orders);
-        moqOrderRepository.Setup(x => x.GetById(order.Id - 1)).Returns(orders[order.Id]);
+        moqOrderRepository.Setup(x => x.GetById(order.Id)).Returns(order);
         moqOrderRepository.Setup(x => x.Add(order));
         var orderRepository = moqOrderRepository.Object;
         orderRepository.OrderProcessed += HandleOrderProcessed;
