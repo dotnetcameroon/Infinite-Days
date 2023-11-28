@@ -9,6 +9,7 @@ Welcome to Infinite Days Challenge! This event is designed to test your skills i
 > - [Challenge rules](./docs/rules.md)
 > - [Project structure](./docs/project-structure.md)
 > - [Run the application](./docs/run-application.md)
+> - [Test the solution](./docs/test-application.md)
 
 ### Task
 Build a robust e-commerce order processing system that includes features like order creation, inventory management, and customer notification.
