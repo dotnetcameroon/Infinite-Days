@@ -8,6 +8,7 @@ Welcome to Infinite Days Challenge! This event is designed to test your skills i
 > Especially:
 > - [Challenge rules](./docs/rules.md)
 > - [Project structure](./docs/project-structure.md)
+> - [Run the application](./docs/run-application.md)
 
 ### Task
 Build a robust e-commerce order processing system that includes features like order creation, inventory management, and customer notification.
@@ -30,8 +31,8 @@ Build a robust e-commerce order processing system that includes features like or
 3. **Implement the Features:** Follow the steps provided in the source code to implement the required features. Utilize the provided interfaces, and ensure that your code adheres to the specified C# concepts.
 
 4. **Write Unit Tests:** Implement unit tests for the features you've developed. Ensure comprehensive test coverage to verify the correctness of your implementation.
-> Note that the initial project will include predefined tests. You should add your own.
-> We will take in consideration the number of passed tests
+    > Note that the initial project will include predefined tests. You should add your own.
+    > We will take in consideration the number of passed tests
 
 5. **Commit Changes:** Make regular commits with clear and concise commit messages as you progress through the challenge.
 

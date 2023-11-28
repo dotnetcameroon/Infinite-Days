@@ -6,12 +6,12 @@ Welcome to the E-commerce Order Processing System Challenge! This document outli
 
 Here is what the solution looks like:
 ``` md
-|_ src
-| |_ app
-| |_ lib
-| |_ models
-| |_ ui
-|_ tests
+|__ src
+|  |__ app
+|  |__ lib
+|  |__ models
+|  |__ ui
+|__ tests
 ```
 We will dive into the `src` folder, because the `tests` one is pretty simple to understand.
 
