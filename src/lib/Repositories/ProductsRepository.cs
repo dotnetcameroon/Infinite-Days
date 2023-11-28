@@ -3,17 +3,10 @@ using models;
 
 namespace lib.Repositories.Concrete;
 
-internal class ProductsRepository : IProductsRepository
+internal class ProductsRepository(IEnumerable<Product> products)
+    : IProductsRepository
 {
-    private readonly List<Product> _products = [];
-    public ProductsRepository()
-    {
-    }
-
-    public ProductsRepository(IEnumerable<Product> products)
-    {
-        _products = products.ToList();
-    }
+    private readonly List<Product> _products = products.ToList();
 
     public IReadOnlyCollection<Product> GetAll()
     {
@@ -23,7 +16,7 @@ internal class ProductsRepository : IProductsRepository
 
     public Product? GetById(int Id)
     {
-        // TODO: Retrieve a single order or default from the _products database by its Id
+        // TODO: Retrieve a single product or default from the _products database by its Id
         throw new NotImplementedException();
     }
 }
