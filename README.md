@@ -3,6 +3,10 @@
 Welcome to Infinite Days Challenge! This event is designed to test your skills in building a real-world project using advanced C# concepts. In this challenge, you'll be working on an e-commerce order processing system.
 
 ## Challenge Overview
+> Note: The full documentation is available in the `/docs` folder. Take a look at this for further explanations.
+>
+> Especially:
+> - [Project structure](./docs/project-structure.md)
 
 ### Task
 Build a robust e-commerce order processing system that includes features like order creation, inventory management, and customer notification.
