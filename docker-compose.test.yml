@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  testrunner:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+    working_dir: /app
+    entrypoint: ["dotnet", "test", "--logger:trx"]

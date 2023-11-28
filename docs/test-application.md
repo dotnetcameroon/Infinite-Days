@@ -9,7 +9,7 @@ Before running the application, ensure you have the following prerequisites inst
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) for building and running the .NET 8 application.
 - [Docker](https://www.docker.com/get-started) for running the application in a Docker container.
 
-## Running Locally
+## Testing Locally
 
 1. **Clone the Repository:**
    ```bash
@@ -19,7 +19,7 @@ Before running the application, ensure you have the following prerequisites inst
 
 2. **Build and Run the Application:**
     ```bash
-    dotnet run --project src/ui
+    dotnet test
     ```
 
 ## Running with Docker Compose
