@@ -3,7 +3,7 @@ using models;
 
 namespace lib.Repositories.Concrete;
 
-public class ProductsRepository : IProductsRepository
+internal class ProductsRepository : IProductsRepository
 {
     private readonly List<Product> _products = [];
     public ProductsRepository()

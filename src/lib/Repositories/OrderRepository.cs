@@ -3,7 +3,7 @@ using models;
 
 namespace lib.Repositories;
 
-public class OrderRepository : IOrderRepository
+internal class OrderRepository : IOrderRepository
 {
     private readonly List<Order> _orders = [];
     public event Action<Order> OrderProcessed;
