@@ -22,7 +22,7 @@ public class OrderRepositoryTests
     }
 
     [Fact]
-    public void AddOrder_ShouldAddAnOrderToTheDatabase()
+    public void Add_ShouldAddOrdersToTheDatabase()
     {
         // Arrange
         OrderRepository orderRepository = new();
@@ -90,22 +90,6 @@ public class OrderRepositoryTests
 
         // Assert
         Assert.True(isHandled);
-    }
-
-    [Fact]
-    public void Add_ShouldAddOrderToTheDatabase()
-    {
-        // Arrange
-        OrderRepository orderRepository = new();
-        var order = new Order();
-
-        // Act
-        orderRepository.Add(order);
-
-        // Assert
-        var orders = orderRepository.GetAll();
-        Assert.Contains(order, orders);
-        Assert.Equal(1, orders.Count);
     }
 
     static List<Order> GenerateRandomOrders(int number)
