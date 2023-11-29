@@ -1,6 +1,6 @@
 # Rules and Tips
 
-Welcome to the E-commerce Order Processing System Challenge! This document outlines the rules and provides tips to help you succeed in the challenge.
+Welcome to the Infinite Days Challenge! This document outlines the rules and provides tips to help you succeed in the challenge.
 
 ## Rules 🚨🚨
 

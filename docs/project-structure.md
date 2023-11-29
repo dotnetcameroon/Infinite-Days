@@ -1,6 +1,6 @@
 # Project Structure
 
-Welcome to the E-commerce Order Processing System Challenge! This document outlines the structure of the project to guide you through the implementation of the required features.
+Welcome to the Infinite Days Challenge! This document outlines the structure of the project to guide you through the implementation of the required features.
 
 ## Overview
 
