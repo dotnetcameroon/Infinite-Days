@@ -18,10 +18,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v8
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.100
+        dotnet-version: '8.x'
+        include-prerelease: true
 
     - name: Restore Dependencies
       run: dotnet restore
