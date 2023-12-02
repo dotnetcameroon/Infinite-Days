@@ -1,6 +1,11 @@
 # Infinite Days Challenge
+<p align="center">
+<img src="./docs/brand.png" alt="Infinite Days Brand">
+</p>
 
 Welcome to Infinite Days Challenge! This event is designed to test your skills in building a real-world project using advanced C# concepts. In this challenge, you'll be working on an e-commerce order processing system.
+
+[Register here](https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAQZCnXNURFBaSlRKOFdXVFY3VDA5NTBKQktOSlA5Mi4u)
 
 ## Challenge Overview
 > Note: The full documentation is available in the `/docs` folder. Take a look at this for further explanations.
