@@ -26,7 +26,6 @@ internal class Program
 
     private static async Task Main(string[] args)
     {
-        // The program starts by showing a menu of the actions the user can perform
         IHost host = CreateHostBuilder().Build();
         using var scope = host.Services.CreateScope();
         var sp = scope.ServiceProvider;
@@ -52,8 +51,8 @@ internal class Program
     private static (bool, string) ValidateMenuInput(int arg)
     {
         return (
-            arg > 0 && arg < 5,
-            "Choose a number between 1 and 4. Try again: "
+            arg > 0 && arg < _features.Count + 1,
+            $"Choose a number between 1 and {_features.Count}. Try again: "
         );
     }
 
