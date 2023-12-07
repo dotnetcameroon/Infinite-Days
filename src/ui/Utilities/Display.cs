@@ -20,7 +20,7 @@ internal static class Display
         if(!string.IsNullOrEmpty(prompt))
             Console.Write(prompt);
 
-        if (!typeof(T).IsPrimitive)
+        if (!typeof(T).IsPrimitive && typeof(T) != typeof(decimal))
             throw new ArgumentException("T must be a primitive type");
         bool firstLoop = true;
         bool valid = false;
