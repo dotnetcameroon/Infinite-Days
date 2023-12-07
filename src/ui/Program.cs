@@ -38,6 +38,8 @@ internal class Program
 
             int choice = Display.Read<int>(ValidateMenuInput, "\nEnter your choice: ");
 
+            Console.Clear();
+
             if (_features.TryGetValue(choice, out var option))
                 exit = await option.featureAsync(sp);
             else
