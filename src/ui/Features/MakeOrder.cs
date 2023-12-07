@@ -5,7 +5,7 @@ using ui.Utilities;
 
 namespace ui.Features;
 
-internal partial class Feature
+internal static partial class Feature
 {
     public static async Task<bool> MakeOrder(IServiceProvider sp)
     {
