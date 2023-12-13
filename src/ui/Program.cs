@@ -1,5 +1,7 @@
 ﻿using app;
+using app.Services;
 using lib;
+using lib.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ui.Features;
@@ -31,7 +33,12 @@ internal class Program
         var sp = scope.ServiceProvider;
         bool exit = false;
 
-        while(!exit)
+
+
+        var databaseInitMethodes = sp.GetRequiredService<IDatabaseInitMethodes>();
+
+        databaseInitMethodes.InitializeDatabase();
+        while (!exit)
         {
             Console.WriteLine();
             Display.PrintMenu(_options);

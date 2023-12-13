@@ -1,4 +1,5 @@
 using app.Repositories;
+using lib.Data;
 using lib.Repositories;
 using lib.Repositories.Concrete;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IProductsRepository, ProductsRepository>();
+        services.AddScoped<IDatabaseInitMethodes, DatabaseInitMethodes>();
+        services.AddScoped<IDatabaseAccessMethodes, DatabaseAccessMethodes>();
+
         return services;
     }
 }
