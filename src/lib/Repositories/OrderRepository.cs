@@ -21,18 +21,20 @@ internal class OrderRepository : IOrderRepository
 
     public IReadOnlyCollection<Order> GetAll()
     {
-        // TODO: Implement the logic that returns all the registered orders
-        throw new NotImplementedException();
+        return _orders.AsReadOnly();
+
     }
 
     public Order? GetById(int id)
     {
-        // TODO: Return the first or default order that matches the id
-        throw new NotImplementedException();
+        return _orders.FirstOrDefault(order => order.Id == id);
+
     }
 
     public void Add(Order order)
     {
+        _orders.Add(order);
+
         // TODO: Add the logic to processed the order and save it into the list of orders
         OrderProcessed?.Invoke(order);
     }
