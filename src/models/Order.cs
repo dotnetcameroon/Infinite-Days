@@ -11,14 +11,17 @@ public sealed class Order
 
     public void AddProduct(Product product)
     {
-        // TODO: Implement the method that adds a product to this order
-        throw new NotImplementedException();
+        _products.Add(product);
+
     }
 
     public void RemoveProduct(int id)
     {
-        // TODO: Implement the method that removes a specific product from the order based on its Id
-        throw new NotImplementedException();
+        var product = _products.FirstOrDefault(p => p.Id == id);
+        if (product != null)
+        {
+            _products.Remove(product);
+        }
     }
 
     public void ChangeOrderStatus(bool status)
