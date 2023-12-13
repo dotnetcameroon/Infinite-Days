@@ -10,13 +10,11 @@ internal class ProductsRepository(IEnumerable<Product> products)
 
     public IReadOnlyCollection<Product> GetAll()
     {
-        // TODO: Return all the products from the list
-        throw new NotImplementedException();
+        return _products;
     }
 
     public Product? GetById(int Id)
     {
-        // TODO: Retrieve a single product or default from the _products database by its Id
-        throw new NotImplementedException();
+        return _products.FirstOrDefault(p=>p.Id.Equals(Id));
     }
 }
