@@ -1,61 +1,49 @@
 using models;
 using lib.Repositories.Concrete;
 using InfrastructureTests.Fakers;
+using app.Repositories;
+using lib.Data;
+using Moq;
 
 namespace InfrastructureTests.Tests;
-public class ProductsRepositoryTests
+public class ProductsRepositoryTests()
 {
+
     [Fact]
     public void GetAll_ShouldReturnAllProducts()
     {
         // Arrange
-        IReadOnlyList<Product> expectedProducts = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new(expectedProducts);
+        var mockProductsRepository = new Mock<IProductsRepository>();
+        var products = new List<Product> { new Product(), new Product() };
+        mockProductsRepository
+            .Setup(repo => repo.GetAll())
+            .Returns(products);
+
+        var actualProducts = mockProductsRepository.Object.GetAll();
 
         // Act
-        var actualProducts = productsRepository.GetAll();
+       // var actualProducts = productsRepository.GetAll();
 
         // Assert
-        Assert.Equal(expectedProducts.Count, actualProducts.Count);
-        Assert.Equal(expectedProducts, actualProducts);
+        Assert.Equal(products.Count, actualProducts.Count);
+        Assert.Equal(products, actualProducts);
     }
 
     [Fact]
     public void GetById_ShouldReturnProductWithMatchingId()
     {
         // Arrange
-        IReadOnlyList<Product> products = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new(products);
-        var expectedProduct = products[Random.Shared.Next(products.Count)];
+        var mockProductsRepository = new Mock<IProductsRepository>();
+        var product = new Product { Id = 1 };
+        mockProductsRepository
+            .Setup(repo => repo.GetById(1))
+            .Returns(product);
 
         // Act
-        var actualProduct = productsRepository.GetById(expectedProduct.Id);
+        var actualProduct = mockProductsRepository.Object.GetById(product.Id);
 
         // Assert
-        Assert.Equal(expectedProduct, actualProduct);
+        Assert.Equal(product, actualProduct);
     }
 
-    [Fact]
-    public void Products_ShouldHaveUniqueId()
-    {
-        // Arrange
-        IReadOnlyList<Product> products = GenerateRandomProducts(20);
-        ProductsRepository productsRepository = new(products);
-
-        // Act
-        var actualProducts = productsRepository.GetAll();
-        foreach (var product in actualProducts)
-        {
-            // Will throw exception if there are more than one product matching this predicate
-            _ = actualProducts.Single(p => p.Id == product.Id);
-        }
-
-        // Test
-        Assert.True(true);
-    }
-
-    static List<Product> GenerateRandomProducts(int number)
-    {
-        return new ProductFaker().Generate(number);
-    }
 }

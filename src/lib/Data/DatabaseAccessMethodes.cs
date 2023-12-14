@@ -14,30 +14,43 @@ namespace lib.Data
     {
         public async Task<Response<TEntity>> CallDatabaseResponseAsync<TEntity>(DatabaseAccessModel accessModel)
         {
-			try
-			{
-                Response<TEntity> result = new();
-                using (IDbConnection db = new SqliteConnection(_databaseInitMethodes.DatabasePath))
+            Response<TEntity> result = new();
+
+            try
+            {
+                var sqliteConnectionBuilder = new SqliteConnectionStringBuilder()
                 {
+                    DataSource = _databaseInitMethodes.DatabasePath
+                };
+                using (IDbConnection connection = new SqliteConnection(sqliteConnectionBuilder.ToString()))
+                {
+                    //connection.Open();
 
                     if (accessModel.ResultType == ResultType.Single)
                     {
-                        result.Result = (await db.QueryFirstOrDefaultAsync<TEntity>(accessModel.CommandText, accessModel.Parameters));
+                        result.Result = (await connection.QueryFirstOrDefaultAsync<TEntity>(accessModel.CommandText, accessModel.Parameters));
                         result.IsSuccess = true;
                     }
                     else if (accessModel.ResultType == ResultType.Multiple)
                     {
-                        result.Results = (await db.QueryAsync<TEntity>(accessModel.CommandText, accessModel.Parameters));
+                        result.Results = (await connection.QueryAsync<TEntity>(accessModel.CommandText, accessModel.Parameters));
+                        result.IsSuccess = true;
+                    }
+                    else if (accessModel.ResultType == ResultType.NoResult)
+                    {
+                        await connection.ExecuteAsync(accessModel.CommandText, accessModel.Parameters);
                         result.IsSuccess = true;
                     }
                 }
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
 			{
 
-				throw;
-			}
+				Console.WriteLine(ex.Message);
+                return result;
+
+            }
         }
     }
 }

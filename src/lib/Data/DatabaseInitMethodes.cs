@@ -17,7 +17,7 @@ public class DatabaseInitMethodes : IDatabaseInitMethodes
 
     public string DatabasePath { get => $"{Environment.CurrentDirectory}\\Infinite-database.db"; }
 
-    public void CreateDatabase()
+    public async void CreateDatabase()
     {
 
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3());
@@ -33,14 +33,14 @@ public class DatabaseInitMethodes : IDatabaseInitMethodes
                                             Name TEXT NOT NULL,
                                             Price DECIMAL NOT NULL
                                         )";
-                connection.QueryAsync(CommandText, CommandType.Text);
+                await connection.ExecuteAsync(CommandText, CommandType.Text);
 
                 var CommandText1 = @"CREATE TABLE IF NOT EXISTS Orders (
                                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                                 TotalPrice DECIMAL NOT NULL
                                             )";
 
-                connection.QueryAsync(CommandText1, CommandType.Text);
+                await connection.ExecuteAsync(CommandText1, CommandType.Text);
 
                 var CommandText2 = @"CREATE TABLE IF NOT EXISTS ProductsOrder (
                                                 OrderId INTEGER,
@@ -48,7 +48,7 @@ public class DatabaseInitMethodes : IDatabaseInitMethodes
                                                 FOREIGN KEY (OrderId) REFERENCES Orders(Id),
                                                 FOREIGN KEY (ProductId) REFERENCES Products(Id)
                                             )";
-                connection.QueryAsync(CommandText2, CommandType.Text);
+                await connection.ExecuteAsync(CommandText2, CommandType.Text);
             }
             catch (Exception ex)
             {

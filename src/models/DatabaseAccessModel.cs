@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace models
 {
-    public class DatabaseAccessModel()
+    public class DatabaseAccessModel(ResultType resultType, object? parameters, string commandText)
     {
-        public ResultType ResultType { get; init; } 
-        public object Parameters { get; init; } 
-        public string CommandText { get; init; } 
+        public  ResultType ResultType  => resultType;
+        public object? Parameters => parameters;
+        public string CommandText => commandText;
+
     }
     public enum ResultType
     {
