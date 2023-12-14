@@ -1,5 +1,7 @@
 using app.Repositories;
+using Microsoft.VisualBasic;
 using models;
+using System.Diagnostics;
 
 namespace app.Services;
 
@@ -26,20 +28,28 @@ public sealed class OrderService
         return _orderRepository.GetAll();
     }
 
-    public Task ProcessOrderAsync(int orderId)
+    public async Task ProcessOrderAsync(int orderId)
     {
         // Asynchronously process the order
         // Simulates a long CPU bound calculation
         // TODO: Retrieve the order with the corresponding Id from the repository
+        // ANSWER
+        var searchOrder = _orderRepository.GetById(orderId);
+        if(searchOrder != null)
+        {
+            await Task.Delay(1400);
+        }
         Thread.Sleep(1400);
         // TODO: Change the status of this order
-        throw new NotImplementedException();
+        // ANSWER
+        searchOrder.ChangeOrderStatus(true);
     }
 
     private void HandleOrderProcessed(Order order)
     {
         // Notify the user that an order has been processed
         // TODO: Write the order informations to the console
-        throw new NotImplementedException();
+        // ANSWER
+        Console.WriteLine($"Order has been processed: {order}");
     }
 }
