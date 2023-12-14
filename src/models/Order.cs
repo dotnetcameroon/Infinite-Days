@@ -2,7 +2,6 @@ namespace models;
 
 public sealed class Order
 {
-    private static int _count = 0;
     private readonly List<Product> _products = [];
     public int Id { get; set; } 
     public bool Processed { get; private set; }

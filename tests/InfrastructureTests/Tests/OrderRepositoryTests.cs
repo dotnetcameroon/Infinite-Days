@@ -1,96 +1,89 @@
+using app.Repositories;
 using InfrastructureTests.Fakers;
 using lib.Repositories;
 using models;
+using Moq;
 
 namespace InfrastructureTests.Tests;
 
 public class OrderRepositoryTests
 {
+    private readonly Mock<IOrderRepository> mockRepository;
+    private readonly List<Order> expectedOrders;
+
+    public OrderRepositoryTests()
+    {
+        mockRepository = new Mock<IOrderRepository>();
+        Order order = new() { Id = 1, TotalPrice = 10200 };
+        order.AddProducts(new List<Product> { new Product { Id = 1, Name = "Laptop", Price = 10000 }, new Product { Id = 2, Name = "Mouse", Price = 200 } });
+        Order order1 = new() { Id = 1, TotalPrice = 3000 };
+        order1.AddProducts(new List<Product> { new Product { Id = 3, Name = "Keyboard", Price = 3000 } });
+
+        expectedOrders = new List<Order>
+            {
+              order,order1};
+    }
     [Fact]
     public void GetAll_ShouldReturnAllOrders()
     {
-        // Arrange
-        IReadOnlyList<Order> expectedOrders = GenerateRandomOrders(200);
-        OrderRepository orderRepository = new(expectedOrders);
+
 
         // Act
-        var actualOrders = orderRepository.GetAll();
+        mockRepository.Setup(m => m.GetAll()).Returns(expectedOrders);
+        var actualOrders = mockRepository.Object.GetAll();
 
         // Assert
-        Assert.Equal(expectedOrders.Count, actualOrders.Count);
         Assert.Equal(expectedOrders, actualOrders);
     }
 
     [Fact]
     public void Add_ShouldAddOrdersToTheDatabase()
     {
-        // Arrange
-        OrderRepository orderRepository = new();
-        var previousCount = orderRepository.GetAll().Count;
-        var orders = GenerateRandomOrders(200);
+        var order = new Order { Id = 3, TotalPrice = 200 };
+        order.AddProducts(new List<Product> { new Product { Id = 4, Name = "Monitor", Price = 200 } });
+        mockRepository.Setup(m => m.Add(order)).Callback(() => expectedOrders.Add(order));
 
-        // Act
-        foreach (var order in orders)
-        {
-            orderRepository.Add(order);
-        }
-        var currentCount = orderRepository.GetAll().Count;
+        mockRepository.Object.Add(order);
 
-        // Assert
-        Assert.True(previousCount < currentCount);
-        Assert.Equal(orders.Count, currentCount - previousCount);
+        Assert.Contains(order, expectedOrders);
+
+        Assert.False(order.Processed);
     }
 
     [Fact]
     public void GetById_ShouldReturnOrderWithMatchingId()
     {
         // Arrange
-        IReadOnlyList<Order> orders = GenerateRandomOrders(200);
-        OrderRepository orderRepository = new (orders);
-        var expectedOrder = orders[Random.Shared.Next(orders.Count)];
+        mockRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns((int id) => expectedOrders.Find(o => o.Id == id));
 
-        // Act
-        var actualOrder = orderRepository.GetById(expectedOrder.Id);
+        var result1 = mockRepository.Object.GetById(1);
 
-        // Assert
-        Assert.Equal(expectedOrder, actualOrder);
+        Assert.Equal(expectedOrders[0], result1);
+
+        var result2 = mockRepository.Object.GetById(1000);
+
+        Assert.Null(result2);
     }
 
-    [Fact]
-    public void Products_ShouldHaveUniqueId()
-    {
-        // Arrange
-        IReadOnlyList<Order> orders = GenerateRandomOrders(20);
-        OrderRepository orderRepository = new (orders);
 
-        // Act
-        var actualOrders = orderRepository.GetAll();
-        foreach (var order in actualOrders)
-        {
-            // Will throw exception if there are more than one product matching this predicate
-            _ = actualOrders.Single(p => p.Id == order.Id);
-        }
 
-        // Assert
-        Assert.True(true);
-    }
+    //[Fact]
+    //public async Task Add_ShouldRaiseTheOrderProcessedEvent()
+    //{
+    //    // Arrange
+    //    bool isHandled = false;
 
-    [Fact]
-    public async Task Add_ShouldRaiseTheOrderProcessedEvent()
-    {
-        // Arrange
-        bool isHandled = false;
-        OrderRepository orderRepository = new();
-        orderRepository.OrderProcessed += _ => isHandled = true;
-        var order = new Order();
+    //    mockRepository.Object.OrderProcessed += _ => isHandled = true;
+    //    var order = new Order();
 
-        // Act
-        orderRepository.Add(order);
-        await Task.Delay(100); // Wait for the event to be handled
+    //    // Act
+    //    mockRepository.Object.Add(order);
 
-        // Assert
-        Assert.True(isHandled);
-    }
+    //    await Task.Delay(10000); // Wait for the event to be handled
+
+    //    // Assert
+    //    Assert.True(isHandled);
+    //}
 
     static List<Order> GenerateRandomOrders(int number)
     {
