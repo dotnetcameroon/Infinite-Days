@@ -20,6 +20,8 @@ internal class Program
         { 2, ("Make an order", Feature.MakeOrder) },
         { 3, ("See all orders", Feature.ViewOrders) },
         { 4, ("Quit", Feature.Exit) },
+                { 5, ("Add Product", Feature.AddProduct) },
+
     };
 
     private static readonly (int, string)[] _options = _features

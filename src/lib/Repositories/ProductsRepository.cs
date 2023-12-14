@@ -35,6 +35,20 @@ internal class ProductsRepository(IDatabaseAccessMethodes databaseAccessMethodes
         return new Product();
     }
 
+    public Product? Add(Product product)
+    {
+        string command = "INSERT INTO Products (Name,Price) VALUES (@Name,@Price); SELECT last_insert_rowid();";
+        var param = new { product.Name, product.Price };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<int>(new(ResultType.Single, param, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            product.Id = result.Result;
+        }
+
+        return product;
+    }
+
     public IList<Product> GetProductByOrderId(int Id)
     {
         string command = "select Products.* from Products,ProductsOrder where Products.Id = ProductsOrder.ProductId and ProductsOrder.OrderId = @Id";
