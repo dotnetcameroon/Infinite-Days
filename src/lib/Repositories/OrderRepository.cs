@@ -3,7 +3,7 @@ using models;
 
 namespace lib.Repositories;
 
-internal class OrderRepository : IOrderRepository
+public class OrderRepository : IOrderRepository
 {
     private readonly List<Order> _orders = [];
     public event Action<Order> OrderProcessed;
@@ -22,18 +22,21 @@ internal class OrderRepository : IOrderRepository
     public IReadOnlyCollection<Order> GetAll()
     {
         // TODO: Implement the logic that returns all the registered orders
-        throw new NotImplementedException();
+        return _orders.AsReadOnly();
+        //throw new NotImplementedException();
     }
 
     public Order? GetById(int id)
     {
         // TODO: Return the first or default order that matches the id
-        throw new NotImplementedException();
+        return _orders.Find(p => p.Id == id);
+        // throw new NotImplementedException();
     }
 
     public void Add(Order order)
     {
-        // TODO: Add the logic to processed the order and save it into the list of orders
+        _orders.Add(order);
+
         OrderProcessed?.Invoke(order);
     }
 }
