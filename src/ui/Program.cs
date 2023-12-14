@@ -13,12 +13,12 @@ internal class Program
         int, // Key
         (string featureName, Func<IServiceProvider, Task<bool>> featureAsync)> // Value
         _features = new()
-    {
-        { 1, ("See all products", Feature.ViewProducts) },
-        { 2, ("Make an order", Feature.MakeOrder) },
-        { 3, ("See all orders", Feature.ViewOrders) },
-        { 4, ("Quit", Feature.Exit) },
-    };
+        {
+            { 1, ("See all products", Feature.ViewProducts) },
+            { 2, ("Make an order", Feature.MakeOrder) },
+            { 3, ("See all orders", Feature.ViewOrders) },
+            { 4, ("Quit", Feature.Exit) },
+        };
 
     private static readonly (int, string)[] _options = _features
         .Select(f => (f.Key, f.Value.featureName))

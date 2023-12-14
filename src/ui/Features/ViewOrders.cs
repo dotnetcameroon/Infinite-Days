@@ -17,7 +17,7 @@ internal static partial class Feature
             Console.WriteLine($"Total Price:\t{product.TotalPrice}");
             Console.WriteLine("___________________________________________");
         }
-
+        
         return Task.FromResult(false);
     }
 }

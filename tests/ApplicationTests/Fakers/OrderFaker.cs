@@ -1,11 +1,14 @@
 using Bogus;
 using models;
 
-namespace InfrastructureTests.Fakers;
-
-class OrderFaker : Faker<Order>
+namespace InfrastructureTests.Fakers
 {
-    public OrderFaker()
+    public class OrderFaker : Faker<Order>
     {
+        public OrderFaker()
+        {
+
+        }
+
     }
 }
