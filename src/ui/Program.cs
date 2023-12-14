@@ -19,8 +19,9 @@ internal class Program
         { 1, ("See all products", Feature.ViewProducts) },
         { 2, ("Make an order", Feature.MakeOrder) },
         { 3, ("See all orders", Feature.ViewOrders) },
-        { 4, ("Quit", Feature.Exit) },
-                { 5, ("Add Product", Feature.AddProduct) },
+        { 4, ("Add Product", Feature.AddProduct) },
+        { 5, ("Update Product", Feature.UpdateProduct) },
+        { 6, ("Quit", Feature.Exit) },
 
     };
 

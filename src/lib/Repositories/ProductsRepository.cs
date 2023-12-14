@@ -49,6 +49,16 @@ internal class ProductsRepository(IDatabaseAccessMethodes databaseAccessMethodes
         return product;
     }
 
+    public bool Update(Product product)
+    {
+        string command = "Update Products  set Name = @Name , Price = @Price where Id = @Id";
+        var param = new { product.Name, product.Price };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<int>(new(ResultType.Single, product, command)).Result;
+
+
+        return result.IsSuccess;
+    }
+
     public IList<Product> GetProductByOrderId(int Id)
     {
         string command = "select Products.* from Products,ProductsOrder where Products.Id = ProductsOrder.ProductId and ProductsOrder.OrderId = @Id";
