@@ -31,23 +31,15 @@ public sealed class OrderService
         // Asynchronously process the order
         // Simulates a long CPU bound calculation
         // TODO: Retrieve the order with the corresponding Id from the repository
-        // ANSWER
-        var searchOrder = _orderRepository.GetById(orderId);
-        if(searchOrder != null)
-        {
-            await Task.Delay(1400);
-        }
         Thread.Sleep(1400);
         // TODO: Change the status of this order
-        // ANSWER
-        searchOrder.ChangeOrderStatus(true);
+        throw new NotImplementedException();
     }
 
     private void HandleOrderProcessed(Order order)
     {
         // Notify the user that an order has been processed
         // TODO: Write the order informations to the console
-        // ANSWER
-        Console.WriteLine($"Order has been processed: {order}");
+        throw new NotImplementedException();
     }
 }
