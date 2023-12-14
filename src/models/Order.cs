@@ -4,14 +4,20 @@ public sealed class Order
 {
     private static int _count = 0;
     private readonly List<Product> _products = [];
-    public int Id { get; private init; } = ++_count;
+    public int Id { get; set; } 
     public bool Processed { get; private set; }
     public IReadOnlyList<Product> Products => _products.ToArray();
-    public decimal TotalPrice => Products.Sum(p => p.Price);
+    public decimal TotalPrice { get; set; }
 
     public void AddProduct(Product product)
     {
         _products.Add(product);
+
+    }
+
+    public void AddProducts(List<Product> products)
+    {
+        _products.AddRange(products);
 
     }
 

@@ -10,5 +10,7 @@ namespace lib.Data
     public interface IDatabaseAccessMethodes
     {
         Task<Response<TEntity>> CallDatabaseResponseAsync<TEntity>(DatabaseAccessModel accessModel);
+        Task<Response<TEntity>> CallDatabasetransactionAsync<TEntity>(DatabaseAccessModel accessModel, DatabaseAccessModel accessModel1);
+
     }
 }

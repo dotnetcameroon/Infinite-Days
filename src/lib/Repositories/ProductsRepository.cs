@@ -7,7 +7,6 @@ namespace lib.Repositories.Concrete;
 internal class ProductsRepository(IDatabaseAccessMethodes databaseAccessMethodes)
     : IProductsRepository
 {
-   // private readonly List<Product> _products = products.ToList();
 
     public IReadOnlyCollection<Product> GetAll()
     {
@@ -34,5 +33,19 @@ internal class ProductsRepository(IDatabaseAccessMethodes databaseAccessMethodes
         }
 
         return new Product();
+    }
+
+    public IList<Product> GetProductByOrderId(int Id)
+    {
+        string command = "select Products.* from Products,ProductsOrder where Products.Id = ProductsOrder.ProductId and ProductsOrder.OrderId = @Id";
+        var param = new { Id };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<Product>(new(ResultType.Multiple, param, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            return result.Results.ToList().AsReadOnly();
+        }
+
+        return (new List<Product>()).AsReadOnly();
     }
 }

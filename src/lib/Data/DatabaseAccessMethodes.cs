@@ -52,5 +52,59 @@ namespace lib.Data
 
             }
         }
+
+        public async Task<Response<TEntity>> CallDatabasetransactionAsync<TEntity>(DatabaseAccessModel accessModel, DatabaseAccessModel accessModel1)
+        {
+            Response<TEntity> result = new();
+
+            try
+            {
+                var sqliteConnectionBuilder = new SqliteConnectionStringBuilder()
+                {
+                    DataSource = _databaseInitMethodes.DatabasePath
+                };
+                using (IDbConnection connection = new SqliteConnection(sqliteConnectionBuilder.ToString()))
+                {
+                    SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3());
+                    SQLitePCL.Batteries.Init();
+                    connection.Open();
+
+                    using (IDbTransaction transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            var orderId = await connection.QueryFirstOrDefaultAsync<int>(accessModel.CommandText, accessModel.Parameters, transaction);
+
+                            List<ProductsOrder> productsOrders = new List<ProductsOrder>();
+                            var param = (Product[])accessModel1.Parameters;
+                            foreach (var item in param)
+                            {
+                                //productsOrders.Add(new() { OrderId = orderId, ProductId = item.Id });
+                                connection.Execute(accessModel1.CommandText, new { OrderId = orderId, ProductId = item.Id }, transaction);
+
+                            }
+                           // connection.Execute(accessModel1.CommandText, productsOrders, transaction);
+
+                            transaction.Commit();
+                            result.IsSuccess = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            return result;
+                        }
+                    }
+
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                return result;
+
+            }
+        }
     }
 }
