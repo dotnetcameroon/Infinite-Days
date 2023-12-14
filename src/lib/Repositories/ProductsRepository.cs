@@ -1,22 +1,75 @@
 using app.Repositories;
+using lib.Data;
 using models;
 
 namespace lib.Repositories.Concrete;
 
-internal class ProductsRepository(IEnumerable<Product> products)
+internal class ProductsRepository(IDatabaseAccessMethodes databaseAccessMethodes)
     : IProductsRepository
 {
-    private readonly List<Product> _products = products.ToList();
 
     public IReadOnlyCollection<Product> GetAll()
     {
-        // TODO: Return all the products from the list
-        throw new NotImplementedException();
+        string command = "select * from products";
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<Product>(new(ResultType.Multiple,null, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            return result.Results.ToList().AsReadOnly();
+        }
+
+        return (new List<Product>()).AsReadOnly();
     }
 
     public Product? GetById(int Id)
     {
-        // TODO: Retrieve a single product or default from the _products database by its Id
-        throw new NotImplementedException();
+        string command = "select * from products where Id = @Id";
+        var param = new {Id = Id};
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<Product>(new(ResultType.Single, param, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            return result.Result;
+        }
+
+        return new Product();
+    }
+
+    public Product? Add(Product product)
+    {
+        string command = "INSERT INTO Products (Name,Price) VALUES (@Name,@Price); SELECT last_insert_rowid();";
+        var param = new { product.Name, product.Price };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<int>(new(ResultType.Single, param, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            product.Id = result.Result;
+        }
+
+        return product;
+    }
+
+    public bool Update(Product product)
+    {
+        string command = "Update Products  set Name = @Name , Price = @Price where Id = @Id";
+        var param = new { product.Name, product.Price };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<int>(new(ResultType.Single, product, command)).Result;
+
+
+        return result.IsSuccess;
+    }
+
+    public IList<Product> GetProductByOrderId(int Id)
+    {
+        string command = "select Products.* from Products,ProductsOrder where Products.Id = ProductsOrder.ProductId and ProductsOrder.OrderId = @Id";
+        var param = new { Id };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<Product>(new(ResultType.Multiple, param, command)).Result;
+
+        if (result.IsSuccess)
+        {
+            return result.Results.ToList().AsReadOnly();
+        }
+
+        return (new List<Product>()).AsReadOnly();
     }
 }

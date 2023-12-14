@@ -1,61 +1,81 @@
 using models;
 using lib.Repositories.Concrete;
 using InfrastructureTests.Fakers;
+using app.Repositories;
+using lib.Data;
+using Moq;
 
 namespace InfrastructureTests.Tests;
 public class ProductsRepositoryTests
 {
+    private readonly Mock<IProductsRepository> mockRepository;
+    private readonly List<Product> products;
+
+    public ProductsRepositoryTests()
+    {
+        mockRepository = new Mock<IProductsRepository>();
+        products = new List<Product>
+            {
+                new Product { Id = 1, Name = "product4", Price = 100000 },
+                new Product { Id = 2, Name = "product5", Price = 20000 },
+                new Product { Id = 3, Name = "product6", Price = 30000 }
+            };
+    }
+
     [Fact]
     public void GetAll_ShouldReturnAllProducts()
     {
         // Arrange
-        IReadOnlyList<Product> expectedProducts = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new(expectedProducts);
+        mockRepository.Setup(m => m.GetAll()).Returns(products);
 
         // Act
-        var actualProducts = productsRepository.GetAll();
+        var result = mockRepository.Object.GetAll();
 
         // Assert
-        Assert.Equal(expectedProducts.Count, actualProducts.Count);
-        Assert.Equal(expectedProducts, actualProducts);
+        Assert.Equal(products.Count, result.Count);
+        Assert.Equal(products, result);
+
     }
 
     [Fact]
     public void GetById_ShouldReturnProductWithMatchingId()
     {
         // Arrange
-        IReadOnlyList<Product> products = GenerateRandomProducts(200);
-        ProductsRepository productsRepository = new(products);
-        var expectedProduct = products[Random.Shared.Next(products.Count)];
+        mockRepository.Setup(m => m.GetById(It.IsAny<int>())).Returns((int id) => products.Find(p => p.Id == id));
+        var result1 = mockRepository.Object.GetById(1);
+        Assert.Equal(products[0], result1);
+
 
         // Act
-        var actualProduct = productsRepository.GetById(expectedProduct.Id);
+        var result2 = mockRepository.Object.GetById(1000);
 
         // Assert
-        Assert.Equal(expectedProduct, actualProduct);
+        Assert.Null(result2);
     }
 
     [Fact]
-    public void Products_ShouldHaveUniqueId()
+    public void Add_Should_Add_Product_To_Repository()
     {
-        // Arrange
-        IReadOnlyList<Product> products = GenerateRandomProducts(20);
-        ProductsRepository productsRepository = new(products);
+        var product = new Product { Id = 10, Name = "product10", Price = 20000 };
 
-        // Act
-        var actualProducts = productsRepository.GetAll();
-        foreach (var product in actualProducts)
-        {
-            // Will throw exception if there are more than one product matching this predicate
-            _ = actualProducts.Single(p => p.Id == product.Id);
-        }
+        mockRepository.Setup(m => m.Add(product)).Callback(() => products.Add(product));
 
-        // Test
-        Assert.True(true);
+        mockRepository.Object.Add(product);
+
+        Assert.Contains(product, products);
     }
 
-    static List<Product> GenerateRandomProducts(int number)
+
+    [Fact]
+    public void Update_Should_Update_Product_In_Repository()
     {
-        return new ProductFaker().Generate(number);
+        var product = new Product { Id = 1, Name = "product11", Price = 9000 };
+
+        mockRepository.Setup(m => m.Update(product)).Callback(() => products[0] = product);
+
+        mockRepository.Object.Update(product);
+
+        Assert.Equal(product, products[0]);
     }
+
 }

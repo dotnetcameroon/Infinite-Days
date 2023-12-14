@@ -31,7 +31,7 @@ internal static partial class Feature
             }
 
             var product = productService.GetById(productId);
-            if(product is null)
+            if(product.Id == 0)
             {
                 Display.WriteError($"The product {productId} does not exist in the database. Retry after 1s ...");
                 Thread.Sleep(1000);

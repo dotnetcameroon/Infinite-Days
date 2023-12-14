@@ -15,4 +15,13 @@ public class ProductService(IProductsRepository productsRepository)
     {
         return _productsRepository.GetById(Id);
     }
+
+    public Product? Add(Product product)
+    {
+        return _productsRepository.Add(product);
+    }
+    public bool Update(Product product)
+    {
+        return _productsRepository.Update(product);
+    }
 }

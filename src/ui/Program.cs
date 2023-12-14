@@ -1,5 +1,7 @@
 ﻿using app;
+using app.Services;
 using lib;
+using lib.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ui.Features;
@@ -17,7 +19,10 @@ internal class Program
         { 1, ("See all products", Feature.ViewProducts) },
         { 2, ("Make an order", Feature.MakeOrder) },
         { 3, ("See all orders", Feature.ViewOrders) },
-        { 4, ("Quit", Feature.Exit) },
+        { 4, ("Add Product", Feature.AddProduct) },
+        { 5, ("Update Product", Feature.UpdateProduct) },
+        { 6, ("Quit", Feature.Exit) },
+
     };
 
     private static readonly (int, string)[] _options = _features
@@ -31,7 +36,12 @@ internal class Program
         var sp = scope.ServiceProvider;
         bool exit = false;
 
-        while(!exit)
+
+
+        var databaseInitMethodes = sp.GetRequiredService<IDatabaseInitMethodes>();
+
+        databaseInitMethodes.InitializeDatabase();
+        while (!exit)
         {
             Console.WriteLine();
             Display.PrintMenu(_options);
