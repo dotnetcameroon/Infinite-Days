@@ -22,18 +22,26 @@ internal class OrderRepository : IOrderRepository
     public IReadOnlyCollection<Order> GetAll()
     {
         // TODO: Implement the logic that returns all the registered orders
-        throw new NotImplementedException();
+        // ANSWER
+        return _orders.AsReadOnly();
     }
 
     public Order? GetById(int id)
     {
         // TODO: Return the first or default order that matches the id
-        throw new NotImplementedException();
+        // ANSWER
+        if (id <= 0) { return null; }
+
+        var orderToReTurn = _orders.FirstOrDefault(o => o.Id == id);
+        if(orderToReTurn == null) { return null; } else { return orderToReTurn; }
     }
 
     public void Add(Order order)
     {
         // TODO: Add the logic to processed the order and save it into the list of orders
+        // ANSWER
+        if (_orders.Any(o => o.Id == order.Id)) { return; }
+        _orders.Add(order);
         OrderProcessed?.Invoke(order);
     }
 }

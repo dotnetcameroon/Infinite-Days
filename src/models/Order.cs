@@ -12,13 +12,26 @@ public sealed class Order
     public void AddProduct(Product product)
     {
         // TODO: Implement the method that adds a product to this order
-        throw new NotImplementedException();
+        // ANSWER
+        if (_products.Any(p => p.Id == product.Id || p.Name == product.Name)) { return; }
+
+        _products.Add(product);
+        Console.WriteLine("Produit ajouté avec succès !");
     }
 
     public void RemoveProduct(int id)
     {
         // TODO: Implement the method that removes a specific product from the order based on its Id
-        throw new NotImplementedException();
+        // ANSWER 
+        if (Id <= 0) { return; }
+
+        var productToRemove = _products.FirstOrDefault(p => p.Id == Id);
+        if(productToRemove != null)
+        {
+            _products.Remove(productToRemove);
+            Console.WriteLine("Produit supprimé avec succès !");
+        }
+        return;
     }
 
     public void ChangeOrderStatus(bool status)
