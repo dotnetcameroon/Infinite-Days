@@ -40,6 +40,7 @@ internal class OrderRepository(IDatabaseAccessMethodes databaseAccessMethodes, I
             }
 
         }
+        //GetById(3);
         //Order or = new Order();
         //or.AddProducts(new List<Product>() { productsRepository.GetById(3), productsRepository.GetById(2) });
         //Add(or);
@@ -48,11 +49,27 @@ internal class OrderRepository(IDatabaseAccessMethodes databaseAccessMethodes, I
 
     public Order? GetById(int id)
     {
-        return _orders.FirstOrDefault(order => order.Id == id);
+        string command = "select * from  Orders where Id = @Id";
+
+        var param = new { Id = id };
+        var result = databaseAccessMethodes.CallDatabaseResponseAsync<SimpleOrder>(new(ResultType.Single, param, command)).Result;
+        Order order = new();
+        if (result.IsSuccess)
+        {
+
+            order.Id = result.Result.Id;
+            order.TotalPrice = result.Result.TotalPrice;
+            var products = productsRepository.GetProductByOrderId(id);
+
+            order.AddProducts(products.ToList());
+
+        }
+
+        return order;
 
     }
 
-    public void Add(Order order)
+    public Order? Add(Order order)
     {
         order.TotalPrice = order.Products.Sum(p => p.Price);
         var command1 = "INSERT INTO Orders (TotalPrice) VALUES (@TotalPrice); SELECT last_insert_rowid();";
@@ -65,7 +82,9 @@ internal class OrderRepository(IDatabaseAccessMethodes databaseAccessMethodes, I
 
         var resutl = databaseAccessMethodes.CallDatabasetransactionAsync<int>(model1, model2).Result;
 
+        var orderAdd = GetById(resutl.Result);
         // TODO: Add the logic to processed the order and save it into the list of orders
-        OrderProcessed?.Invoke(order);
+        OrderProcessed?.Invoke(orderAdd);
+        return orderAdd;
     }
 }

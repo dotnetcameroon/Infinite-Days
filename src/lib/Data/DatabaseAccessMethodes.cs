@@ -73,7 +73,7 @@ namespace lib.Data
                     {
                         try
                         {
-                            var orderId = await connection.QueryFirstOrDefaultAsync<int>(accessModel.CommandText, accessModel.Parameters, transaction);
+                            var orderId = await connection.QueryFirstOrDefaultAsync<TEntity>(accessModel.CommandText, accessModel.Parameters, transaction);
 
                             List<ProductsOrder> productsOrders = new List<ProductsOrder>();
                             var param = (Product[])accessModel1.Parameters;
@@ -83,10 +83,11 @@ namespace lib.Data
                                 connection.Execute(accessModel1.CommandText, new { OrderId = orderId, ProductId = item.Id }, transaction);
 
                             }
-                           // connection.Execute(accessModel1.CommandText, productsOrders, transaction);
-
+                            // connection.Execute(accessModel1.CommandText, productsOrders, transaction);
+                            
                             transaction.Commit();
                             result.IsSuccess = true;
+                            result.Result = orderId;
                         }
                         catch (Exception ex)
                         {

@@ -15,10 +15,9 @@ public sealed class OrderService
 
     public Order RegisterOrder(Order order)
     {
-        if(_orderRepository.GetById(order.Id) is null)
-            _orderRepository.Add(order);
+          var orderAdd =   _orderRepository.Add(order);
 
-        return order;
+        return orderAdd;
     }
 
     public IReadOnlyCollection<Order> GetAll()
@@ -40,6 +39,13 @@ public sealed class OrderService
 
     private void HandleOrderProcessed(Order order)
     {
-        Console.WriteLine($"Order processed: {order.Id}, {order.Processed}, Total Price: {order.TotalPrice}");
+        Console.WriteLine($" {order.Processed} Total Price: {order.TotalPrice}");
+        foreach (var product in order.Products)
+        {
+            Console.WriteLine($"Id:\t{product.Id}");
+            Console.WriteLine($"Name:\t{product.Name}");
+            Console.WriteLine($"Price:\t{product.Price}");
+            Console.WriteLine("___________________________________________");
+        }
     }
 }
