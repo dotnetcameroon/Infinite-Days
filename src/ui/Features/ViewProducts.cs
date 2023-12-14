@@ -85,7 +85,7 @@ internal static partial class Feature
         Console.Write("Enter Name: ");
         var name = Console.ReadLine() ?? string.Empty;
 
-        Product product1 = new() { Name = name, Price = Price };
+        Product product1 = new() { Name = name, Price = Price ,Id = product.Id};
         var issuc = productService.Update(product1);
 
         if (issuc)

@@ -49,6 +49,23 @@ public class DatabaseInitMethodes : IDatabaseInitMethodes
                                                 FOREIGN KEY (ProductId) REFERENCES Products(Id)
                                             )";
                 await connection.ExecuteAsync(CommandText2, CommandType.Text);
+
+                var CommandText3 = @"INSERT INTO Products (Name, Price) VALUES
+                                            ('Product1', 1999),
+                                            ('Product2', 2999),
+                                            ('Product3', 1499);
+
+                                        INSERT INTO Orders (TotalPrice) VALUES
+                                            (5597),
+                                            (4298),
+                                            (7150);
+
+                                        INSERT INTO ProductsOrder (OrderId, ProductId) VALUES
+                                            (1, 1),
+                                            (1, 2), 
+                                            (2, 1), 
+                                            (3, 3); ";
+                await connection.ExecuteAsync(CommandText3, CommandType.Text);
             }
             catch (Exception ex)
             {

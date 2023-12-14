@@ -79,11 +79,8 @@ namespace lib.Data
                             var param = (Product[])accessModel1.Parameters;
                             foreach (var item in param)
                             {
-                                //productsOrders.Add(new() { OrderId = orderId, ProductId = item.Id });
                                 connection.Execute(accessModel1.CommandText, new { OrderId = orderId, ProductId = item.Id }, transaction);
-
                             }
-                            // connection.Execute(accessModel1.CommandText, productsOrders, transaction);
                             
                             transaction.Commit();
                             result.IsSuccess = true;
@@ -92,6 +89,8 @@ namespace lib.Data
                         catch (Exception ex)
                         {
                             transaction.Rollback();
+                            Console.WriteLine(ex.Message);
+
                             return result;
                         }
                     }
